@@ -178,20 +178,21 @@
 fetchAdData();
 
 function fetchAdData() {  
-        fetch("https://amadertips99.github.io/ads/ads.json")  
-            .then(response => response.json())  
-            .then(data => {  
-                const iframeAdsURL = data.iframeads;  
-                const redCode = data.redCode;  
+    const cacheBuster = new Date().getTime(); // Unique timestamp to prevent caching
+    fetch(`https://amadertips99.github.io/ads/ads.json?t=${cacheBuster}`)  
+        .then(response => response.json())  
+        .then(data => {  
+            const iframeAdsURL = data.iframeads;  
+            const redCode = data.redCode;  
 
-                // Update iframe src and red packet code  
-                document.getElementById("adFrame").src = iframeAdsURL;  
-                document.getElementById("redPacketCode").innerText = redCode;  
-            })  
-            .catch(error => {  
-                console.error('Error fetching data:', error);  
-            });  
-    }  
+            // Update iframe src and red packet code  
+            document.getElementById("adFrame").src = iframeAdsURL;  
+            document.getElementById("redPacketCode").innerText = redCode;  
+        })  
+        .catch(error => {  
+            console.error('Error fetching data:', error);  
+        });  
+}
 
     document.getElementById("claimBtn").addEventListener("click", function() {  
         document.getElementById("headerText").style.display = "none";  
